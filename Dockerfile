@@ -75,7 +75,7 @@ COPY --from=vendor /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
 
 # Apply the Turso driver patch (lastInsertId fix)
-COPY vendor/darkterminal/turso-http-laravel/src/Database/LibSQLPDOStatement.php \
+COPY docker/patches/LibSQLPDOStatement.php \
      ./vendor/darkterminal/turso-http-laravel/src/Database/LibSQLPDOStatement.php
 
 # Set correct permissions
