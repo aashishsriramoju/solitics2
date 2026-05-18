@@ -49,6 +49,7 @@ class SoilReport extends Model
         'organic_matter'            => 'float',
         'health_score'              => 'integer',
         'temperature'               => 'float',
+        'user_id'                   => 'integer',
     ];
 
     public function user(): BelongsTo

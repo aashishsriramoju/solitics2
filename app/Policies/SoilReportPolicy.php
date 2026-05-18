@@ -9,11 +9,11 @@ class SoilReportPolicy
 {
     public function view(User $user, SoilReport $soilReport): bool
     {
-        return $user->id === $soilReport->user_id;
+        return (int) $user->id === (int) $soilReport->user_id;
     }
 
     public function delete(User $user, SoilReport $soilReport): bool
     {
-        return $user->id === $soilReport->user_id;
+        return (int) $user->id === (int) $soilReport->user_id;
     }
 }

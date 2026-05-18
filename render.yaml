@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: soilytics
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: Soilytics
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: libsql
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
+      - key: DB_DATABASE
+        value: soilytics
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: LOG_CHANNEL
+        value: stderr

@@ -32,6 +32,14 @@ return [
 
     'connections' => [
 
+        'libsql' => [
+            'driver'   => 'turso',
+            'url'      => env('TURSO_DATABASE_URL'),
+            'authToken'=> env('TURSO_AUTH_TOKEN'),
+            'database' => env('DB_DATABASE', 'soilytics'),
+            'prefix'   => '',
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
