@@ -22,7 +22,7 @@ RUN composer install \
     --optimize-autoloader
 
 # ── Stage 3: Production image ────────────────────────────────────────────────
-FROM php:8.3-apache
+FROM php:8.4-apache
 
 # Install PHP extensions required by Laravel
 RUN apt-get update && apt-get install -y --no-install-recommends \
