@@ -111,7 +111,24 @@
         @if($report->ai_recommendations)
         <div class="mt-4 p-4 bg-emerald-50/50 border border-emerald-100 rounded-xl">
             <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">AI Recommendations</p>
-            <p class="text-slate-700 text-sm leading-relaxed">{{ $report->ai_recommendations }}</p>
+            <div class="text-slate-700 text-sm leading-relaxed">
+                @php
+                    $decodedRecs = json_decode($report->ai_recommendations, true);
+                @endphp
+                @if(is_array($decodedRecs) && count($decodedRecs) > 0)
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach($decodedRecs as $rec)
+                            @if(isset($rec['name']))
+                                <li><strong>{{ $rec['name'] }}</strong> @if(isset($rec['dose'])) ({{ $rec['dose'] }}) @endif @if(isset($rec['timing'])) — {{ $rec['timing'] }} @endif</li>
+                            @elseif(is_string($rec))
+                                <li>{{ $rec }}</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                @else
+                    {{ $report->ai_recommendations }}
+                @endif
+            </div>
         </div>
         @endif
     </div>
@@ -137,10 +154,10 @@
                         <span class="text-xs text-slate-500 font-medium">{{ __($n['label']) }}</span>
                         <span class="text-xs font-bold text-slate-700">{{ round($n['val']) }}%</span>
                     </div>
-                    <div class="nutrient-bar-track">
-                        <div class="nutrient-bar-fill" style="width: 0%; background: linear-gradient(90deg, var(--tw-gradient-stops)); transition: width 1.2s {{ $i * 0.12 }}s cubic-bezier(0.4,0,0.2,1);"
-                             data-target="{{ $n['val'] }}"
-                             class="bg-gradient-to-r {{ $n['color'] }}"></div>
+                    <div class="nutrient-bar-track w-full bg-slate-200 rounded-full h-2">
+                        <div class="nutrient-bar-fill bg-gradient-to-r {{ $n['color'] }} h-full rounded-full" 
+                             style="width: 0%; transition: width 1.2s {{ $i * 0.12 }}s cubic-bezier(0.4,0,0.2,1);"
+                             data-target="{{ $n['val'] }}"></div>
                     </div>
                 </div>
                 @endforeach

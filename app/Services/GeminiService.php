@@ -21,7 +21,50 @@ class GeminiService
     }
 
     /**
-     * Analyse a soil image using Gemini Vision.
+     * Fetch available Gemini text models dynamically.
+     */
+    private function getAvailableModels(): array
+    {
+        try {
+            $response = Http::timeout(10)->get("https://generativelanguage.googleapis.com/v1beta/models?key={$this->apiKey}");
+            if ($response->successful()) {
+                $models = [];
+                $data = $response->json('models', []);
+                foreach ($data as $modelData) {
+                    $name = str_replace('models/', '', $modelData['name'] ?? '');
+                    if (
+                        str_contains($name, 'gemini') &&
+                        !str_contains($name, 'embedding') &&
+                        !str_contains($name, 'image') &&
+                        !str_contains($name, 'tts') &&
+                        !str_contains($name, 'audio') &&
+                        !str_contains($name, 'vision') // vision is legacy
+                    ) {
+                        $models[] = $name;
+                    }
+                }
+                
+                // Prioritize 'flash' models for speed
+                usort($models, function($a, $b) {
+                    if (str_contains($a, 'flash') && !str_contains($b, 'flash')) return -1;
+                    if (!str_contains($a, 'flash') && str_contains($b, 'flash')) return 1;
+                    return 0;
+                });
+                
+                if (!empty($models)) {
+                    return $models;
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Failed to fetch Gemini models dynamically', ['message' => $e->getMessage()]);
+        }
+        
+        // Hardcoded fallbacks if API fetch fails
+        return ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-1.5-flash-8b'];
+    }
+
+    /**
+     * Analyse a soil image using Gemini Vision with Fallback Algorithm.
      *
      * @param  string  $imagePath  Absolute path to the stored image.
      * @return array
@@ -79,40 +122,54 @@ You MUST respond ONLY with a valid JSON object matching the following structure:
 }
 PROMPT;
 
-            $response = Http::timeout(30)->post(
-                $this->endpoint . '?key=' . $this->apiKey,
-                [
-                    'contents' => [
+            // Fetch available models
+            $models = $this->getAvailableModels();
+
+            // Try models sequentially until one succeeds
+            foreach ($models as $model) {
+                try {
+                    $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
+                    
+                    $response = Http::timeout(30)->post(
+                        $endpoint . '?key=' . $this->apiKey,
                         [
-                            'parts' => [
-                                ['text' => $prompt],
+                            'contents' => [
                                 [
-                                    'inline_data' => [
-                                        'mime_type' => $mimeType,
-                                        'data'      => $imageData,
+                                    'parts' => [
+                                        ['text' => $prompt],
+                                        [
+                                            'inline_data' => [
+                                                'mime_type' => $mimeType,
+                                                'data'      => $imageData,
+                                            ],
+                                        ],
                                     ],
                                 ],
                             ],
-                        ],
-                    ],
-                    'generationConfig' => [
-                        'temperature'    => 0.4,
-                        'maxOutputTokens' => 1000,
-                        'responseMimeType' => 'application/json',
-                    ],
-                ]
-            );
+                            'generationConfig' => [
+                                'temperature'    => 0.4,
+                                'maxOutputTokens' => 1000,
+                                'responseMimeType' => 'application/json',
+                            ],
+                        ]
+                    );
 
-            if ($response->successful()) {
-                $text = $response->json('candidates.0.content.parts.0.text', '');
-                return $this->parseGeminiResponse($text);
+                    if ($response->successful()) {
+                        $text = $response->json('candidates.0.content.parts.0.text', '');
+                        return $this->parseGeminiResponse($text);
+                    }
+                    
+                    Log::warning("Gemini model {$model} failed", ['status' => $response->status(), 'body' => $response->body()]);
+                } catch (\Throwable $err) {
+                    Log::warning("Gemini model {$model} exception", ['message' => $err->getMessage()]);
+                }
             }
 
-            Log::warning('Gemini API error', ['status' => $response->status(), 'body' => $response->body()]);
+            Log::error('All Gemini models failed. Using deterministic fallback dataset.');
             return $this->demoFallback($imagePath);
 
         } catch (\Throwable $e) {
-            Log::error('Gemini Vision exception', ['message' => $e->getMessage()]);
+            Log::error('Gemini Vision root exception', ['message' => $e->getMessage()]);
             return $this->demoFallback($imagePath);
         }
     }

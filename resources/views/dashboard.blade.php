@@ -141,10 +141,10 @@
                             <span class="text-xs text-slate-500 font-medium">{{ __($n['label']) }}</span>
                             <span class="text-xs font-bold text-slate-700">{{ round($n['val']) }}%</span>
                         </div>
-                        <div class="nutrient-bar-track">
-                            <div class="nutrient-bar-fill" style="width: 0%; background: linear-gradient(90deg, var(--tw-gradient-stops)); transition: width 1.2s {{ $loop->index * 0.1 }}s cubic-bezier(0.4,0,0.2,1);"
-                                 data-target="{{ $n['val'] }}"
-                                 class="bg-gradient-to-r {{ $n['color'] }}"></div>
+                        <div class="nutrient-bar-track w-full bg-slate-200 rounded-full h-2">
+                            <div class="nutrient-bar-fill bg-gradient-to-r {{ $n['color'] }} h-full rounded-full" 
+                                 style="width: 0%; transition: width 1.2s {{ $loop->index * 0.1 }}s cubic-bezier(0.4,0,0.2,1);"
+                                 data-target="{{ $n['val'] }}"></div>
                         </div>
                     </div>
                     @endforeach

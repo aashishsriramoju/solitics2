@@ -385,3 +385,615 @@ body {
     header, .no-print { display: none !important; }
     body { background: white !important; color: black !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   WELCOME / LANDING PAGE — Light Theme Styles & Animations
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Fixed Navbar ── */
+.nav-welcome {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-welcome.scrolled {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+    box-shadow: 0 4px 30px rgba(16, 185, 129, 0.06);
+}
+
+/* ── Particle Canvas ── */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Hero Gradient Mesh (light) ── */
+.hero-gradient-mesh {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 85% 50%, rgba(132, 204, 22, 0.08), transparent),
+        radial-gradient(ellipse 50% 60% at 15% 80%, rgba(5, 150, 105, 0.06), transparent);
+    z-index: 1;
+}
+
+/* ── Grid Pattern ── */
+.grid-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+        linear-gradient(rgba(16, 185, 129, 0.6) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.6) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 2;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+/* ── Morphing Blobs (soft light) ── */
+.morph-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: morphBlob 15s ease-in-out infinite;
+}
+
+.morph-blob-1 {
+    width: 500px; height: 500px;
+    background: rgba(16, 185, 129, 0.4);
+    top: -150px; left: -100px;
+}
+
+.morph-blob-2 {
+    width: 400px; height: 400px;
+    background: rgba(132, 204, 22, 0.3);
+    bottom: -100px; right: -80px;
+    opacity: 0.10;
+    animation-delay: -5s;
+}
+
+.morph-blob-3 {
+    width: 300px; height: 300px;
+    background: rgba(5, 150, 105, 0.25);
+    top: 40%; left: 60%;
+    opacity: 0.08;
+    animation-delay: -10s;
+}
+
+@keyframes morphBlob {
+    0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg) scale(1); }
+    25%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(90deg) scale(1.05); }
+    50%  { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; transform: rotate(180deg) scale(0.95); }
+    75%  { border-radius: 60% 40% 60% 40% / 40% 50% 60% 50%; transform: rotate(270deg) scale(1.02); }
+    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(360deg) scale(1); }
+}
+
+/* ── Gradient Text Shimmer ── */
+.gradient-text-shimmer {
+    background: linear-gradient(90deg, #059669 0%, #10b981 25%, #84cc16 50%, #10b981 75%, #059669 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* ── Typewriter Cursor ── */
+.typewriter-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: #10b981;
+    margin-left: 4px;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ── Feature Card (Light 3D) ── */
+.feature-card-3d {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+}
+
+.feature-card-3d::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #10b981, #84cc16, transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.feature-card-3d:hover::before { opacity: 1; }
+
+.feature-card-3d:hover {
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 25px 50px rgba(16, 185, 129, 0.1), 0 0 0 1px rgba(16, 185, 129, 0.08);
+    transform: translateY(-8px);
+}
+
+.feature-card-3d .icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(132, 204, 22, 0.06));
+    border: 1px solid rgba(16, 185, 129, 0.12);
+    transition: all 0.4s ease;
+    margin-bottom: 1.25rem;
+}
+
+.feature-card-3d:hover .icon-wrap {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(132, 204, 22, 0.1));
+}
+
+/* ── Timeline Steps ── */
+.timeline-step {
+    position: relative;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.timeline-step .step-number {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: white;
+    font-weight: 800; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+    position: relative; z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.timeline-step:hover .step-number {
+    transform: scale(1.15);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+}
+
+.timeline-connector {
+    position: absolute;
+    top: 3.5rem;
+    left: calc(50% + 32px);
+    width: calc(100% - 64px);
+    height: 2px;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.08));
+    z-index: 1;
+}
+
+/* ── Stat Counter ── */
+.stat-item {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+    50%      { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+}
+
+/* ── Testimonial Carousel ── */
+.testimonial-track {
+    display: flex;
+    gap: 1.5rem;
+    animation: scrollTestimonials 35s linear infinite;
+    width: max-content;
+}
+
+.testimonial-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollTestimonials {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.testimonial-card {
+    flex-shrink: 0;
+    width: 360px;
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    transition: all 0.4s ease;
+}
+
+.testimonial-card:hover {
+    border-color: rgba(16, 185, 129, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.08);
+}
+
+/* ── CTA Animated Border ── */
+.cta-section {
+    position: relative;
+    border-radius: 28px;
+    padding: 3px;
+    background: linear-gradient(135deg, #059669, #10b981, #84cc16, #10b981, #059669);
+    background-size: 400% 400%;
+    animation: borderGradient 6s ease infinite;
+}
+
+@keyframes borderGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.cta-inner {
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Scroll Reveal Animations ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ── Magnetic Button ── */
+.btn-magnetic {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-magnetic::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(132, 204, 22, 0.25));
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.btn-magnetic:hover::after { opacity: 1; }
+
+/* ── Welcome Section Label ── */
+.section-label-welcome {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.2rem;
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #059669;
+    margin-bottom: 1rem;
+}
+
+/* ── Floating Animations ── */
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%      { transform: translateY(-15px) rotate(2deg); }
+    66%      { transform: translateY(-8px) rotate(-1deg); }
+}
+
+@keyframes floatMedium {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-12px) rotate(-3deg); }
+}
+
+.float-slow   { animation: floatSlow 8s ease-in-out infinite; }
+.float-medium { animation: floatMedium 5s ease-in-out infinite; }
+
+/* ── Dashboard Preview Glow Ring ── */
+.dashboard-preview {
+    position: relative;
+}
+
+.dashboard-preview::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(132, 204, 22, 0.15), rgba(16, 185, 129, 0.25));
+    background-size: 300% 300%;
+    animation: borderGradient 4s ease infinite;
+    z-index: -1;
+    filter: blur(10px);
+}
+
+/* ── Stagger Delays ── */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
+
+/* ── Mobile Menu ── */
+.mobile-menu {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 280px; height: 100vh;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid rgba(16, 185, 129, 0.1);
+    z-index: 200;
+    padding: 5rem 2rem 2rem;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu.open { right: 0; }
+
+.mobile-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.3);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ── Scroll Indicator ── */
+@keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(8px); }
+}
+
+.scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+
+/* ── Hero Section Accent ── */
+.hero-accent-bg {
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.03) 0%, transparent 60%);
+}
+
+/* ── Stats glass card ── */
+.stats-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: 28px;
+}
+
+/* ── CTA blob (light) ── */
+.cta-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.08;
+    animation: morphBlob 12s ease-in-out infinite;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .stat-value { font-size: 2rem; }
+    .testimonial-card { width: 300px; }
+    .cta-inner { padding: 3rem 1.5rem; }
+    .timeline-connector { display: none; }
+    .nav-welcome { padding: 0 1rem; }
+}
+
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   AUTH PAGES — Split Layout with Illustration
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.auth-split {
+    display: flex;
+    min-height: 100vh;
+}
+
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: #ffffff;
+    position: relative;
+    z-index: 2;
+}
+
+.auth-illustration-side {
+    flex: 1;
+    display: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 30%, #a7f3d0 60%, #6ee7b7 100%);
+}
+
+@media (min-width: 1024px) {
+    .auth-illustration-side { display: flex; align-items: center; justify-content: center; }
+}
+
+/* ── Illustration floating elements ── */
+.auth-float-1 { animation: authFloat1 6s ease-in-out infinite; }
+.auth-float-2 { animation: authFloat2 7s ease-in-out infinite; }
+.auth-float-3 { animation: authFloat3 5s ease-in-out infinite; }
+.auth-float-4 { animation: authFloat4 8s ease-in-out infinite; }
+
+@keyframes authFloat1 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes authFloat2 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-15px) rotate(-4deg); }
+}
+@keyframes authFloat3 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-12px) scale(1.05); }
+}
+@keyframes authFloat4 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%      { transform: translateY(-18px) rotate(5deg); }
+    66%      { transform: translateY(-8px) rotate(-2deg); }
+}
+
+/* ── Auth illustration blobs ── */
+.auth-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: morphBlob 12s ease-in-out infinite;
+}
+
+/* ── Auth card (wider for split layout) ── */
+.auth-card-split {
+    width: 100%;
+    max-width: 440px;
+    animation: authSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes authSlideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Auth illustration card ── */
+.auth-illust-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(5, 150, 105, 0.1);
+    transition: all 0.4s ease;
+}
+
+.auth-illust-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(5, 150, 105, 0.15);
+}
+
+/* ── Orbit animation for auth illustration ── */
+.auth-orbit {
+    position: absolute;
+    border: 1px dashed rgba(16, 185, 129, 0.2);
+    border-radius: 50%;
+    animation: spin 30s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* ── Pulse ring ── */
+.auth-pulse-ring {
+    position: absolute;
+    border: 2px solid rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    animation: pulseRing 3s ease-out infinite;
+}
+
+@keyframes pulseRing {
+    0%   { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
