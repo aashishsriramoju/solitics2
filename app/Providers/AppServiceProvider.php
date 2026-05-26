@@ -24,5 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         // Register the SoilReport policy
         Gate::policy(SoilReport::class, SoilReportPolicy::class);
+
+        // Force HTTPS in production to prevent mixed-content blocking of Vite CSS/JS
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }
