@@ -70,11 +70,11 @@
 
         {{-- CTA Buttons --}}
         <div class="flex flex-wrap items-center justify-center gap-4 mb-20 animate-fadeInUp delay-300" style="opacity:0;">
-            <a href="{{ route('register') }}" class="btn-primary text-base py-3.5 px-8">
+            <a href="{{ route('register') }}" class="btn-primary text-base py-3.5 px-8 transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 Get Started Free
             </a>
-            <a href="{{ route('soil.upload') }}" class="btn-secondary text-base py-3.5 px-8">
+            <a href="{{ route('soil.upload') }}" class="btn-secondary text-base py-3.5 px-8 transition-transform duration-300 hover:scale-105 hover:border-emerald-500/50">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                 Analyse Soil Now
             </a>
@@ -148,7 +148,7 @@
         @endphp
 
         @foreach($features as $i => $f)
-        <div class="feature-card animate-fadeInUp" style="animation-delay: {{ $i * 0.08 }}s; opacity: 0;">
+        <div class="feature-card animate-fadeInUp transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_15px_40px_-10px_rgba(16,185,129,0.3)] hover:border-emerald-500/30" style="animation-delay: {{ $i * 0.08 }}s; opacity: 0;">
             <div class="text-4xl mb-4">{{ $f['icon'] }}</div>
             <h3 class="text-lg font-bold text-slate-100 mb-2">{{ $f['title'] }}</h3>
             <p class="text-slate-400 text-sm leading-relaxed">{{ $f['desc'] }}</p>
@@ -175,8 +175,8 @@
             @endphp
 
             @foreach($steps as $i => $step)
-            <div class="text-center animate-fadeInUp" style="animation-delay: {{ $i * 0.12 }}s; opacity: 0;">
-                <div class="relative inline-flex mb-4">
+            <div class="text-center animate-fadeInUp group transition-all duration-500 hover:scale-105" style="animation-delay: {{ $i * 0.12 }}s; opacity: 0;">
+                <div class="relative inline-flex mb-4 transition-transform duration-500 group-hover:rotate-6">
                     <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-lime-500/10 border border-emerald-500/20 flex items-center justify-center text-3xl">
                         {{ $step['icon'] }}
                     </div>
@@ -227,10 +227,13 @@
             ['name' => 'Ravi Kumar', 'role' => 'Paddy Farmer, Telangana', 'quote' => 'Soilytics helped me understand my soil deficiencies and increase my paddy yield by 30% in one season.', 'avatar' => 'R'],
             ['name' => 'Lakshmi Devi', 'role' => 'Horticulture Farmer, AP', 'quote' => 'The fertilizer recommendations were spot on. My tomato crop has never looked healthier. Highly recommended!', 'avatar' => 'L'],
             ['name' => 'Suresh Patel', 'role' => 'Cotton Grower, Gujarat', 'quote' => 'The market price tracker alone saves me thousands every season. Plus the AI analysis is incredibly accurate.', 'avatar' => 'S'],
+            ['name' => 'Anil Sharma', 'role' => 'Wheat Farmer, Punjab', 'quote' => 'With the pH level adjustments suggested, I saw a massive difference in plant health and output. Best tool out there.', 'avatar' => 'A'],
+            ['name' => 'Priya Reddy', 'role' => 'Organic Farmer, Karnataka', 'quote' => 'The organic recommendations are perfect for my farm. I use this every time before a new crop cycle.', 'avatar' => 'P'],
+            ['name' => 'John D.', 'role' => 'Orchard Owner, Maharashtra', 'quote' => 'Analyzing soil health without expensive lab tests was a dream, until Soilytics made it a reality.', 'avatar' => 'J'],
         ];
         @endphp
         @foreach($testimonials as $t)
-        <div class="card-soil p-6">
+        <div class="card-soil p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(16,185,129,0.2)] hover:border-emerald-500/20">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-lime-400 flex items-center justify-center text-white font-bold">{{ $t['avatar'] }}</div>
                 <div>
@@ -252,9 +255,9 @@
         <p class="section-label mb-3">Start Today</p>
         <h2 class="text-4xl md:text-5xl font-black text-slate-100 mb-4">Ready to Transform<br><span class="gradient-text">Your Farming?</span></h2>
         <p class="text-slate-400 mb-8">Join thousands of farmers already using Soilytics for smarter agriculture decisions.</p>
-        <a href="{{ route('register') }}" class="btn-primary text-base py-4 px-10">
+        <a href="{{ route('register') }}" class="btn-primary text-base py-4 px-10 transition-all duration-500 hover:scale-110 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]">
             Start Free Analysis
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </a>
     </div>
 </section>
